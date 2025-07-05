@@ -3,7 +3,7 @@
 File Scraper Pro adalah sebuah aplikasi desktop yang dirancang untuk memindai ribuan file teks (`.txt`) secara efisien untuk mencari dan menyortir baris data berdasarkan port layanan yang spesifik. Aplikasi ini dibangun dengan Python dan PySide6, menyediakan antarmuka pengguna yang modern dan responsif.
 
  
-![Tampilan Aplikasi File Scraper Pro](assets/Screenshot.png)
+![Tampilan Aplikasi File Scraper Pro](Screenshot.png)
 
 ## Fitur Utama
 
