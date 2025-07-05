@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+.venv/
+env/
+*.env
+
+# IDE specific folders
+.vscode/
+.idea/
+
+# Application-specific generated files and folders
+RESULT LIST/
+services_config.json
