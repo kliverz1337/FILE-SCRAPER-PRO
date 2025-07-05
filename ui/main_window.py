@@ -1,5 +1,7 @@
 import qtawesome as qta
 from pathlib import Path
+import sys
+import subprocess
 
 from PySide6.QtCore import Qt, QPoint, QThread, Signal
 from PySide6.QtGui import QColor, QDragEnterEvent, QDropEvent
@@ -118,8 +120,12 @@ class MainWindow(QMainWindow):
         self.settings_button = QPushButton(" Pengaturan")
         self.settings_button.setIcon(qta.icon('fa5s.cog', color='#2c3e50'))
         self.settings_button.clicked.connect(self.open_settings)
+
+        self.open_folder_button = QPushButton(" Buka Hasil")
+        self.open_folder_button.setIcon(qta.icon('fa5s.folder-open', color='#2c3e50'))
+        self.open_folder_button.clicked.connect(self.open_result_folder)
         
-        for btn in [self.start_button, self.settings_button]:
+        for btn in [self.start_button, self.settings_button, self.open_folder_button]:
             shadow = QGraphicsDropShadowEffect(self)
             shadow.setBlurRadius(20)
             shadow.setXOffset(0)
@@ -130,6 +136,7 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.start_button)
         button_layout.addWidget(self.settings_button)
+        button_layout.addWidget(self.open_folder_button)
 
         left_layout.addWidget(self.folder_label)
         left_layout.addWidget(self.log_area)
@@ -275,6 +282,22 @@ class MainWindow(QMainWindow):
         dialog.settings_saved.connect(self._create_result_display)
         dialog.center_on_screen()
         dialog.exec()
+
+    def open_result_folder(self):
+        result_folder = Path('RESULT LIST')
+        if not result_folder.exists():
+            result_folder.mkdir(exist_ok=True)
+            self.update_log("Folder hasil dibuat.", "INFO")
+
+        try:
+            if sys.platform == "win32":
+                subprocess.Popen(['explorer', str(result_folder)])
+            elif sys.platform == "darwin":  # macOS
+                subprocess.Popen(['open', str(result_folder)])
+            else:  # Linux
+                subprocess.Popen(['xdg-open', str(result_folder)])
+        except Exception as e:
+            self.on_scraping_error(f"Tidak dapat membuka folder hasil: {e}")
 
     def set_controls_enabled(self, enabled):
         self.start_button.setEnabled(enabled)
