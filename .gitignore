@@ -13,5 +13,6 @@ env/
 .idea/
 
 # Application-specific generated files and folders
+output/
 RESULT LIST/
 services_config.json
